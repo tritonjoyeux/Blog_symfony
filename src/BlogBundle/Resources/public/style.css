@@ -1,0 +1,24 @@
+body {
+    min-height: 10rem;
+    padding-top: 4.5rem;
+}
+
+#navbarCollapse {
+    justify-content: space-between;
+}
+
+#navbarCollapse ul.right {
+    margin-right: 0 !important;
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+.row {
+    padding-bottom: 20px;
+}
+
+h1 {
+    padding-bottom: 20px;
+}

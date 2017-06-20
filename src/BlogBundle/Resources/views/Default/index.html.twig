@@ -1,0 +1,29 @@
+{% extends 'BlogBundle::layout.html.twig' %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <p>Articles :</p>
+                <table class="table table-striped table-hover">
+                    <thead>
+                    <tr>
+                        <th>Titre</th>
+                        <th>Date</th>
+                        <th>Auteur</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for post in posts %}
+                        <tr class="pointer" onclick="document.location = '{{ path('show_article', {id: post.id}) }}';">
+                            <td>{{ post.title }}</td>
+                            <td>{{ post.pubdate|date("Y/m/d") }}</td>
+                            <td>{{ post.author.username }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}
