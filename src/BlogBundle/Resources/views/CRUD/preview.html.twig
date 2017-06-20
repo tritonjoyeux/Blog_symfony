@@ -1,0 +1,54 @@
+{% extends 'BlogBundle::layout.html.twig' %}
+
+{% use 'SonataAdminBundle:CRUD:base_edit_form.html.twig' with form as parentForm %}
+
+{% import 'SonataAdminBundle:CRUD:base_edit_form_macro.html.twig' as form_helper %}
+
+
+{% block content %}
+    {% set post = admin.subject %}
+    <div class="container">
+        <h1>Article</h1>
+        <div class="row">
+            <div class="col">
+                <h4><u>Titre</u> : {{ post.title }}</h4>
+                {% if post.categories is defined %}
+                    <h6><u>Categories</u> :
+                        {% for categorie in post.categories %}
+                            {{ categorie.name }} -
+                        {% endfor %}
+                    </h6>
+                {% endif %}
+                <h6><u>Auteur</u> : {{ post.author.username }} le {{ post.pubdate|date("Y/m/d") }}</h6>
+                <h6><u>Contenu</u> : <br><br>"{{ post.content }}"</h6>
+
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="sonata-preview-form-container">
+                    {{ block('parentForm') }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block formactions %}
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <button class="btn btn-success" type="submit" name="btn_preview_approve">
+                    <i class="fa fa-check"></i>
+                    {{ 'btn_preview_approve'|trans({}, 'SonataAdminBundle') }}
+                </button>
+                <button class="btn btn-danger" type="submit" name="btn_preview_decline">
+                    <i class="fa fa-times"></i>
+                    {{ 'btn_preview_decline'|trans({}, 'SonataAdminBundle') }}
+                </button>
+            </div>
+        </div>
+    </div>
+{% endblock %}

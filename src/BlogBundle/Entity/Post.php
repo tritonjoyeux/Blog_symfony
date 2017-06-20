@@ -52,9 +52,15 @@ class Post
 
     /**
      * One Product has Many Features.
-     * @ORM\OneToMany(targetEntity="Comment", mappedBy="post")
+     * @ORM\OneToMany(targetEntity="Comment", mappedBy="post", cascade={ "persist", "remove" })
      */
     private $comments;
+
+    /**
+     * One Product has Many Features.
+     * @ORM\ManyToMany(targetEntity="Category", mappedBy="post", cascade={ "persist" })
+     */
+    private $categories;
 
     /**
      * Get id
@@ -206,6 +212,43 @@ class Post
 
     public function __toString()
     {
-        return $this->getTitle() . " by " . $this->getAuthor()->getUsername();
+        if ($this->getTitle() && $this->getAuthor())
+            return $this->getTitle() . " by " . $this->getAuthor()->getUsername();
+        return "";
+    }
+
+    /**
+     * Add category
+     *
+     * @param \BlogBundle\Entity\Category $category
+     *
+     * @return Post
+     */
+    public function addCategory(\BlogBundle\Entity\Category $category)
+    {
+        $category->addPost($this);
+        $this->categories[] = $category;
+
+        return $this;
+    }
+
+    /**
+     * Remove category
+     *
+     * @param \BlogBundle\Entity\Category $category
+     */
+    public function removeCategory(\BlogBundle\Entity\Category $category)
+    {
+        $this->categories->removeElement($category);
+    }
+
+    /**
+     * Get categories
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getCategories()
+    {
+        return $this->categories;
     }
 }

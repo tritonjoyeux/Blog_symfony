@@ -130,4 +130,33 @@ class Comment
     {
         return $this->post;
     }
+
+    /**
+     * Set author
+     *
+     * @param \Application\Sonata\UserBundle\Entity\User $author
+     *
+     * @return Comment
+     */
+    public function setAuthor(\Application\Sonata\UserBundle\Entity\User $author = null)
+    {
+        $this->author = $author;
+
+        return $this;
+    }
+
+    /**
+     * Get author
+     *
+     * @return \Application\Sonata\UserBundle\Entity\User
+     */
+    public function getAuthor()
+    {
+        return $this->author;
+    }
+
+    public function __toString()
+    {
+        return $this->getAuthor() . " by " . $this->getAuthor()->getUsername();
+    }
 }

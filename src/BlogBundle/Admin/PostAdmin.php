@@ -9,12 +9,15 @@ use Sonata\AdminBundle\Form\FormMapper;
 
 class PostAdmin extends AbstractAdmin
 {
+    public $supportsPreviewMode = true;
+
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper->add('author');
         $formMapper->add('title');
         $formMapper->add('content');
         $formMapper->add('pubdate', null, array("date_widget" => "single_text", "time_widget" => "single_text"));
+        $formMapper->add('categories', null, array('multiple' => true, 'by_reference' => false));
     }
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
@@ -30,5 +33,18 @@ class PostAdmin extends AbstractAdmin
         $listMapper->addIdentifier('author');
         $listMapper->addIdentifier('title');
         $listMapper->addIdentifier('pubdate');
+        $listMapper->addIdentifier('categories');
+    }
+
+    public function getTemplate($name)
+    {
+        switch ($name) {
+            case 'preview':
+                return 'BlogBundle:CRUD:preview.html.twig';
+                break;
+            default:
+                return parent::getTemplate($name);
+                break;
+        }
     }
 }

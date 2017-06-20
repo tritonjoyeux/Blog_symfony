@@ -5,14 +5,20 @@ services:
         tags:
           - { name: kernel.event_subscriber }
 
-    admin.comment:
-        class: BlogBundle\Admin\CommentAdmin
-        arguments: [~, BlogBundle\Entity\Comment, ~]
+    admin.category:
+        class: BlogBundle\Admin\CategoryAdmin
+        arguments: [~, BlogBundle\Entity\Category, ~]
         tags:
-            - { name: sonata.admin, manager_type: orm, label: Comment, group: "Blog" }
+            - { name: sonata.admin, manager_type: orm, label: Category, group: "Blog" }
 
     admin.post:
         class: BlogBundle\Admin\PostAdmin
         arguments: [~, BlogBundle\Entity\Post, ~]
         tags:
             - { name: sonata.admin, manager_type: orm, label: Post, group: "Blog" }
+
+    admin.comment:
+        class: BlogBundle\Admin\CommentAdmin
+        arguments: [~, BlogBundle\Entity\Comment, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: Comment, group: "Blog" }

@@ -6,8 +6,16 @@
         <div class="row">
             <div class="col">
                 <h4><u>Titre</u> : {{ post.title }}</h4>
+                {% if post.categories is defined %}
+                    <h6><u>Categories</u> :
+                        {% for categorie in post.categories %}
+                            {{ categorie.name }} -
+                        {% endfor %}
+                    </h6>
+                {% endif %}
                 <h6><u>Auteur</u> : {{ post.author.username }} le {{ post.pubdate|date("Y/m/d") }}</h6>
-                <h6><u>Contenu</u> : <p>"{{ post.content }}"</p></h6>
+                <h6><u>Contenu</u> : <br><br>"{{ post.content }}"</h6>
+
             </div>
         </div>
         <h1>Commentaires</h1>

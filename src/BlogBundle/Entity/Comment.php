@@ -157,6 +157,8 @@ class Comment
 
     public function __toString()
     {
-        return $this->getAuthor() . " by " . $this->getAuthor()->getUsername();
+        if ($this->getAuthor() && $this->getAuthor()->getUsername())
+            return $this->getAuthor() . " by " . $this->getAuthor()->getUsername();
+        return "";
     }
 }

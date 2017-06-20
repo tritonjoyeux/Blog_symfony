@@ -91,6 +91,7 @@ sonata_admin:
         search:              SonataAdminBundle:Core:search.html.twig
         search_result_block: SonataAdminBundle:Block:block_search_result.html.twig
         layout: BlogBundle::standard_layout.html.twig
+        preview:  BlogBundle:CRUD:preview.html.twig
     security:
         handler: sonata.admin.security.handler.role
 
