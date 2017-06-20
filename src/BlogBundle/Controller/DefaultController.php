@@ -16,11 +16,19 @@ class DefaultController extends Controller
      */
     public function indexAction(Request $request)
     {
-        $em = $this->getDoctrine()->getEntityManager();
-        $repository = $em->getRepository('BlogBundle:Post');
-        $posts = $repository->findAll();
+        $em = $this->get('doctrine.orm.entity_manager');
+        $dql = "SELECT p FROM BlogBundle:Post p ORDER BY p.pubdate DESC";
+        $query = $em->createQuery($dql);
+
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $query,
+            $request->query->getInt('page', 1),
+            5
+        );
+
         $categories = $this->getAllCategories();
-        return $this->render('BlogBundle:Default:index.html.twig', array("posts" => $posts, "categories" => $categories));
+        return $this->render('BlogBundle:Default:index.html.twig', array("categories" => $categories, 'pagination' => $pagination));
     }
 
     /**
@@ -28,12 +36,19 @@ class DefaultController extends Controller
      */
     public function getByCategoryAction($slug, Request $request)
     {
-        $em = $this->getDoctrine()->getEntityManager();
-        $repository = $em->getRepository('BlogBundle:Category');
-        $category = $repository->findOneBy(array("slug" => $slug));
-        $posts = $category->getPost();
+        $em = $this->get('doctrine.orm.entity_manager');
+        $dql = "SELECT p FROM BlogBundle:Post p LEFT JOIN p.categories c WHERE c.slug='" . $slug . "'";
+        $query = $em->createQuery($dql);
+
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $query,
+            $request->query->getInt('page', 1),
+            5
+        );
+
         $categories = $this->getAllCategories();
-        return $this->render('BlogBundle:Default:index.html.twig', array("posts" => $posts, "categories" => $categories));
+        return $this->render('BlogBundle:Default:index.html.twig', array("categories" => $categories, 'pagination' => $pagination));
     }
 
     /**

@@ -269,7 +269,7 @@ class Post
 
     public function setSlug()
     {
-        $this->slug = $this->getAuthor()->getUsername().'-'.implode("-", explode(" ", strtolower($this->getTitle())));
+        $this->slug = $this->getId() . $this->getAuthor()->getUsername() . '-' . implode("-", explode(" ", strtolower($this->getTitle())));
     }
 
     /**

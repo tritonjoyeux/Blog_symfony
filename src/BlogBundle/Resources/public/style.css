@@ -36,3 +36,9 @@ form > .row{
 #dropdownMenuLink:hover {
     color: #cccccc;
 }
+
+.pagination span {
+    color: black;
+    font-weight: bold;
+    padding: 4px;
+}

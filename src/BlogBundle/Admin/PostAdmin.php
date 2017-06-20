@@ -22,6 +22,7 @@ class PostAdmin extends AbstractAdmin
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
+        $datagridMapper->add('id');
         $datagridMapper->add('author');
         $datagridMapper->add('content');
         $datagridMapper->add('pubdate');
@@ -30,6 +31,7 @@ class PostAdmin extends AbstractAdmin
 
     protected function configureListFields(ListMapper $listMapper)
     {
+        $listMapper->addIdentifier('id');
         $listMapper->addIdentifier('author');
         $listMapper->addIdentifier('title');
         $listMapper->addIdentifier('pubdate');

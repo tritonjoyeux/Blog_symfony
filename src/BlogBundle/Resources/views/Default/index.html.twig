@@ -4,25 +4,34 @@
     <div class="container">
         <div class="row">
             <div class="col">
-                <p>Articles :</p>
+                <h1>Articles :</h1>
                 <table class="table table-striped table-hover">
                     <thead>
                     <tr>
+                        <th>Auteur</th>
                         <th>Titre</th>
                         <th>Date</th>
-                        <th>Auteur</th>
                     </tr>
                     </thead>
                     <tbody>
-                    {% for post in posts %}
-                        <tr class="pointer" onclick="document.location = '{{ path('show_article', {slug: post.slug}) }}';">
-                            <td>{{ post.title }}</td>
-                            <td>{{ post.pubdate|date("Y/m/d") }}</td>
+                    {% for post in pagination %}
+                        <tr class="pointer" onclick="document.location = '{{ path('show_article', {slug: post.slug}) }}';" {% if loop.index is odd %}class="color"{% endif %}>
                             <td>{{ post.author.username }}</td>
+                            <td>{{ post.title }}</td>
+                            <td>{{ post.pubdate | date('Y-m-d') }}</td>
                         </tr>
                     {% endfor %}
                     </tbody>
                 </table>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="navigation">
+                    {{ knp_pagination_render(pagination) }}
+                </div>
             </div>
         </div>
     </div>
