@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="category")
  * @ORM\Entity(repositoryClass="BlogBundle\Repository\CategoryRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Category
 {
@@ -33,6 +34,12 @@ class Category
      * @ORM\JoinTable(name="categories_posts")
      */
     private $post;
+
+    /**
+     * @var string
+     * @ORM\Column(name="slug", type="string", length=255)
+     */
+    private $slug;
 
     /**
      * Get id
@@ -114,5 +121,27 @@ class Category
     public function getPost()
     {
         return $this->post;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSlug()
+    {
+        return $this->slug;
+    }
+
+    public function setSlug()
+    {
+        $this->slug = implode("-", explode(" ", strtolower($this->getName())));
+    }
+
+    /**
+     * @ORM\PrePersist
+     * @ORM\PreUpdate
+     */
+    public function updateSlug()
+    {
+        $this->setSlug();
     }
 }

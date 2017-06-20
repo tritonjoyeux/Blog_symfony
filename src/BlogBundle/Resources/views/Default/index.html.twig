@@ -15,7 +15,7 @@
                     </thead>
                     <tbody>
                     {% for post in posts %}
-                        <tr class="pointer" onclick="document.location = '{{ path('show_article', {id: post.id}) }}';">
+                        <tr class="pointer" onclick="document.location = '{{ path('show_article', {slug: post.slug}) }}';">
                             <td>{{ post.title }}</td>
                             <td>{{ post.pubdate|date("Y/m/d") }}</td>
                             <td>{{ post.author.username }}</td>

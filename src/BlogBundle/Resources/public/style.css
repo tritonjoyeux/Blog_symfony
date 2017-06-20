@@ -26,3 +26,13 @@ h1 {
 form > .row{
     display: none;
 }
+
+#dropdownMenuLink {
+    background: transparent;
+    color: #aaaaaa;
+    border: none;
+}
+
+#dropdownMenuLink:hover {
+    color: #cccccc;
+}

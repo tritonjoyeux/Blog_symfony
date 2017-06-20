@@ -8,3 +8,12 @@
         <span>Blog Admin</span>
     </a>
 {% endblock %}
+
+{% block sonata_top_nav_menu_add_block %}
+    <li>
+        <a href="{{ path('home') }}">
+            Home
+        </a>
+    </li>
+    {{ parent() }}
+{% endblock %}

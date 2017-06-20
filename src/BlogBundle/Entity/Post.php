@@ -10,6 +10,7 @@ use BlogBundle\Entity;
  *
  * @ORM\Table(name="post")
  * @ORM\Entity(repositoryClass="BlogBundle\Repository\PostRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Post
 {
@@ -61,6 +62,12 @@ class Post
      * @ORM\ManyToMany(targetEntity="Category", mappedBy="post", cascade={ "persist" })
      */
     private $categories;
+
+    /**
+     * @var string
+     * @ORM\Column(name="slug", type="string", length=255)
+     */
+    private $slug;
 
     /**
      * Get id
@@ -250,5 +257,27 @@ class Post
     public function getCategories()
     {
         return $this->categories;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSlug()
+    {
+        return $this->slug;
+    }
+
+    public function setSlug()
+    {
+        $this->slug = $this->getAuthor()->getUsername().'-'.implode("-", explode(" ", strtolower($this->getTitle())));
+    }
+
+    /**
+     * @ORM\PrePersist
+     * @ORM\PreUpdate
+     */
+    public function updateSlug()
+    {
+        $this->setSlug();
     }
 }

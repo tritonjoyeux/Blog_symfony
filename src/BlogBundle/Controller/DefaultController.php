@@ -19,17 +19,31 @@ class DefaultController extends Controller
         $em = $this->getDoctrine()->getEntityManager();
         $repository = $em->getRepository('BlogBundle:Post');
         $posts = $repository->findAll();
-        return $this->render('BlogBundle:Default:index.html.twig', array("posts" => $posts));
+        $categories = $this->getAllCategories();
+        return $this->render('BlogBundle:Default:index.html.twig', array("posts" => $posts, "categories" => $categories));
     }
 
     /**
-     * @Route("/show/{id}", name="show_article")
+     * @Route("/category/{slug}", name="get_by_category")
      */
-    public function showArticleAction($id, Request $request)
+    public function getByCategoryAction($slug, Request $request)
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+        $repository = $em->getRepository('BlogBundle:Category');
+        $category = $repository->findOneBy(array("slug" => $slug));
+        $posts = $category->getPost();
+        $categories = $this->getAllCategories();
+        return $this->render('BlogBundle:Default:index.html.twig', array("posts" => $posts, "categories" => $categories));
+    }
+
+    /**
+     * @Route("/show/{slug}", name="show_article")
+     */
+    public function showArticleAction($slug, Request $request)
     {
         $em = $this->getDoctrine()->getEntityManager();
         $repository = $em->getRepository('BlogBundle:Post');
-        $post = $repository->findOneBy(array("id" => $id));
+        $post = $repository->findOneBy(array("slug" => $slug));
 
         $comment = new Comment();
         $comment->setAuthor($this->getUser());
@@ -49,6 +63,15 @@ class DefaultController extends Controller
             $em->flush();
         }
 
-        return $this->render('BlogBundle:Default:show.html.twig', array("post" => $post, "form" => $form->createView()));
+        $categories = $this->getAllCategories();
+        return $this->render('BlogBundle:Default:show.html.twig', array("post" => $post, "form" => $form->createView(), "categories" => $categories));
+    }
+
+    private function getAllCategories()
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+        $repository = $em->getRepository('BlogBundle:Category');
+        $categories = $repository->findAll();
+        return $categories;
     }
 }
