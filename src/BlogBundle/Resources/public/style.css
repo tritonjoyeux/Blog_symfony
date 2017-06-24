@@ -42,3 +42,13 @@ form > .row{
     font-weight: bold;
     padding: 4px;
 }
+
+.btn-secondary.focus, .btn-secondary:focus {
+    -webkit-box-shadow: 0 0 0 0 rgba(204,204,204,.5);
+    box-shadow: 0 0 0 0 rgba(204,204,204,.5);
+}
+
+.dropdown-menu {
+    border-color: black;
+    border-width: 2px;
+}

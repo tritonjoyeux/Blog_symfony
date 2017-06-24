@@ -11,6 +11,7 @@
                         <th>Auteur</th>
                         <th>Titre</th>
                         <th>Date</th>
+                        <th>Content</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -19,6 +20,7 @@
                             <td>{{ post.author.username }}</td>
                             <td>{{ post.title }}</td>
                             <td>{{ post.pubdate | date('Y-m-d') }}</td>
+                            <td>{{ post.content | truncate(200, true, '...') }}</td>
                         </tr>
                     {% endfor %}
                     </tbody>

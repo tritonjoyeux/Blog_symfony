@@ -1,0 +1,9 @@
+{% extends "BlogBundle::layout.html.twig" %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            {{ include('@FOSUser/Security/login_content.html.twig') }}
+        </div>
+    </div>
+{% endblock content %}

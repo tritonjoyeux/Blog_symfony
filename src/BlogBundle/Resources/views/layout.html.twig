@@ -29,23 +29,41 @@
         <ul class="navbar-nav mr-auto right">
             <li class="nav-item">
                 <div class="dropdown    ">
-                    <a class="btn btn-secondary dropdown-toggle" href="#" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">
+                    <a class="btn btn-secondary dropdown-toggle" href="#" id="dropdownMenuLink" data-toggle="dropdown"
+                       aria-haspopup="false" aria-expanded="false">
                         Categories
                     </a>
 
                     {% if categories is defined %}
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                        {% for categorie in categories %}
-                            <a class="dropdown-item" href="{{ path('get_by_category', {slug: categorie.slug}) }}">{{ categorie.name }}</a>
-                        {% endfor %}
-                    </div>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                            {% for categorie in categories %}
+                                <a class="dropdown-item"
+                                   href="{{ path('get_by_category', {slug: categorie.slug}) }}">{{ categorie.name }}</a>
+                            {% endfor %}
+                        </div>
                     {% endif %}
                 </div>
             </li>
         </ul>
-        <span class="right">
-            <a class="nav-link" id="dropdownMenuLink" href="{{ path('sonata_admin_dashboard') }}">Admin</a>
-        </span>
+        {% if is_granted('ROLE_ADMIN') %}
+            <span class="right">
+                <a class="nav-link" id="dropdownMenuLink" href="{{ path('sonata_admin_dashboard') }}">Admin</a>
+            </span>
+            <span class="right">
+                <a class="nav-link" id="dropdownMenuLink" href="{{ path('fos_user_security_logout') }}">Log out</a>
+            </span>
+        {% elseif is_granted('ROLE_USER') %}
+            <span class="right">
+                <a class="nav-link" id="dropdownMenuLink" href="{{ path('fos_user_security_logout') }}">Log out</a>
+            </span>
+        {% else %}
+            <span class="right">
+                <a class="nav-link" id="dropdownMenuLink" href="{{ path('fos_user_registration_register') }}">Register</a>
+            </span>
+            <span class="right">
+                <a class="nav-link" id="dropdownMenuLink" href="{{ path('fos_user_security_login') }}">Log in</a>
+            </span>
+        {% endif %}
     </div>
 </nav>
 
